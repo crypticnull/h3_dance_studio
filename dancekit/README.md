@@ -253,6 +253,24 @@ If tempo comes out half or double, pass `--bpm`. If the downbeat lands on beat 3
 
 ---
 
+## Tests
+
+```bash
+pip install -e ".[test]"
+pytest
+```
+
+439 tests, about 30 seconds, no GPU. The beat-analysis tests measure against synthetic
+tracks with known beat times, so the accuracy figures quoted above are checked rather
+than remembered. The two load-bearing ones are worth knowing about:
+
+- `test_keyposes_land_on_the_grid` — every detected keypose ends up at the beat time it
+  was assigned. That is the whole premise of `retime`.
+- `test_the_dance_is_exactly_on_the_shape_at_every_anchor` — the composed equivalent.
+
+`ffmpeg` on PATH enables the video-rendering tests; without it they skip. The `rtmlib`
+video paths are not covered — see the last bullet below.
+
 ## Limits, honestly
 
 - **The built-in vocabulary is plain.** 19 poses of generic movement. It will produce

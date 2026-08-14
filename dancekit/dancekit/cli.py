@@ -228,6 +228,14 @@ def cmd_harvest(a):
         drop_near_neutral=a.drop_neutral, mirror_invariant=not a.keep_mirrors,
         min_cluster_size=a.min_count)
 
+    if not lib:
+        sys.exit(
+            f"{len(cands)} shapes harvested but the filters discarded all of them.\n"
+            f"--min-count {a.min_count} needs a shape to recur that many times; "
+            f"--min-distance {a.min_distance} may be merging everything into clusters "
+            f"too small to survive it.\n"
+            "Try --min-count 1, or a lower --min-distance, or more footage.")
+
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     harvester.save_library(out / "vocabulary.npz", lib, meta)
     render.contact_sheet({m["name"]: lib[m["name"]] for m in meta},
