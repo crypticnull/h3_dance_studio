@@ -11,3 +11,5 @@ clips/
 *.mp3
 !docs/*.mp4
 .DS_Store
+.pytest_cache/
+.coverage

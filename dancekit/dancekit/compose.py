@@ -39,6 +39,11 @@ def label_sections(energy: np.ndarray, k: int = 3, seed: int = 0) -> np.ndarray:
     k = int(max(1, min(k, len(energy))))
     if k == 1 or len(energy) < 2:
         return np.zeros(len(energy), dtype=int)
+    # A track with no dynamics -- or a `beatgrid.synthetic` grid, which carries no onset
+    # envelope at all -- gives every phrase the same energy. kmeans on identical points
+    # divides by a zero distance sum, so answer directly: it is all one section.
+    if float(np.ptp(energy)) < 1e-9:
+        return np.zeros(len(energy), dtype=int)
     feats = np.stack([energy, np.gradient(energy)], axis=-1)
     np.random.seed(seed)
     _, labels = kmeans2(feats, k, minit="++", seed=seed)
