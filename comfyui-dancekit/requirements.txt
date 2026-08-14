@@ -1,0 +1,11 @@
+# dancekit itself is NOT on PyPI -- see install.md for the two supported ways to
+# make it importable. These are dancekit's own dependencies:
+numpy>=1.24
+scipy>=1.10
+librosa>=0.10
+soundfile>=0.12
+opencv-python>=4.8
+# torch is intentionally absent: every ComfyUI install already ships it.
+# optional, only for harvesting from VIDEO files (pose JSON needs nothing extra):
+# rtmlib>=0.0.13
+# onnxruntime-gpu
